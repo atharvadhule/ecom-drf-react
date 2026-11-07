@@ -1,10 +1,10 @@
+from django.conf import settings
 from django.db import models
-from accounts.models import User
 from products.models import Product
 
 class Cart(models.Model):
    id = models.AutoField(primary_key=True)
-   user = models.OneToOneField('accounts.User', on_delete=models.CASCADE)
+   user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
 class CartItem(models.Model):

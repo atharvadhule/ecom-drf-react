@@ -1,0 +1,242 @@
+.detail-page {
+  min-height: 100vh;
+  background: #f7f7f4;
+  color: #1f2925;
+  text-align: left;
+}
+
+.detail-main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 42px 32px 72px;
+}
+
+.detail-back-link {
+  display: inline-flex;
+  margin-bottom: 22px;
+  align-items: center;
+  gap: 9px;
+  color: #56635c;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.detail-back-link:hover {
+  color: #1f352a;
+}
+
+.product-details-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  overflow: hidden;
+  border: 1px solid #e7e8e3;
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: 0 8px 28px rgb(31 41 37 / 5%);
+}
+
+.detail-art {
+  position: relative;
+  display: flex;
+  min-height: 470px;
+  padding: 28px;
+  align-items: flex-start;
+  overflow: hidden;
+  background: #edf0e9;
+}
+
+.detail-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 470px;
+  object-fit: cover;
+  background: #edf0e9;
+}
+
+.detail-art > span {
+  position: relative;
+  z-index: 1;
+  padding: 8px 12px;
+  border: 1px solid rgb(80 98 87 / 18%);
+  border-radius: 999px;
+  color: #56685d;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.detail-art-orbit {
+  position: absolute;
+  right: -45px;
+  bottom: -125px;
+  width: 390px;
+  height: 390px;
+  border: 1px solid rgb(80 98 87 / 16%);
+  border-radius: 50%;
+}
+
+.detail-art-orbit::before,
+.detail-art-orbit::after {
+  position: absolute;
+  border: 1px solid rgb(80 98 87 / 16%);
+  border-radius: 50%;
+  content: "";
+}
+
+.detail-art-orbit::before {
+  inset: 28px;
+}
+
+.detail-art-orbit::after {
+  inset: 60px;
+}
+
+.detail-content {
+  padding: 48px 42px;
+  align-self: center;
+}
+
+.detail-eyebrow {
+  margin: 0 0 12px;
+  color: #758078;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.product-details-name {
+  margin: 0;
+  color: #1f2925;
+  font-size: clamp(32px, 4vw, 46px);
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+}
+
+.product-details-description {
+  margin-top: 18px;
+  color: #68746d;
+  font-size: 15px;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+}
+
+.detail-price {
+  margin: 24px 0;
+  color: #26332c;
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.product-details-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 18px 0;
+  border-top: 1px solid #eceee9;
+  border-bottom: 1px solid #eceee9;
+}
+
+.product-details-facts dt {
+  color: #89928b;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.product-details-facts dd {
+  margin: 6px 0 0;
+  color: #35453b;
+  font-size: 14px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.detail-shop-link {
+  display: flex;
+  min-height: 48px;
+  margin-top: 24px;
+  padding: 0 20px;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 999px;
+  background: #294438;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 160ms ease;
+}
+
+.detail-shop-link:hover {
+  background: #1f352a;
+}
+
+.product-details-status {
+  padding: 56px 24px;
+  border: 1px solid #e7e8e3;
+  border-radius: 22px;
+  background: #fff;
+  color: #68746d;
+  text-align: center;
+}
+
+.product-details-error {
+  color: #9c3d31;
+}
+
+@media (max-width: 760px) {
+  .product-details-card {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-art {
+    min-height: 280px;
+  }
+
+  .detail-image {
+    min-height: 320px;
+    max-height: 440px;
+  }
+
+  .detail-content {
+    padding: 34px 28px;
+  }
+}
+
+@media (max-width: 600px) {
+  .detail-main {
+    padding: 26px 16px 48px;
+  }
+
+  .detail-art {
+    min-height: 220px;
+  }
+
+  .detail-image {
+    min-height: 240px;
+    max-height: 320px;
+  }
+
+  .detail-art-orbit {
+    right: -90px;
+    bottom: -185px;
+  }
+
+  .detail-content {
+    padding: 28px 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detail-shop-link {
+    transition: none;
+  }
+}

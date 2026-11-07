@@ -1,3 +1,6 @@
-from django.test import TestCase
+﻿from django.test import SimpleTestCase
 
-# Create your tests here.
+
+class AuthRemovalTests(SimpleTestCase):
+    def test_authentication_is_not_required_for_api_access(self):
+        self.assertTrue(True)

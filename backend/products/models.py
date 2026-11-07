@@ -8,4 +8,6 @@ class Product(models.Model):
     description=models.TextField()
     stock=models.IntegerField()
     category=models.CharField(max_length=100)
+    price = models.IntegerField()
+    image = models.ImageField(upload_to='products/', blank=True, null=True)
     
