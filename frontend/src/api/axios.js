@@ -14,6 +14,23 @@ let accessToken = null;
 export function setAuthToken(token) {
     accessToken = token;
 }
+
+// Stores a callback provided by React.
+let onTokenRefresh = null;
+
+// Allows React to register its state setter.
+export function setOnTokenRefresh(callback) {
+    onTokenRefresh = callback;
+}
+
+
+// Callback for logging out the user.
+let onLogout = null;
+
+export function setOnLogout(callback) {
+    onLogout = callback;
+}
+
 api.interceptors.request.use(
     (config) => {
         if (accessToken) {
@@ -21,6 +38,34 @@ api.interceptors.request.use(
         }
 
         return config;
+    }
+);
+api.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    (error) => {
+        if (
+            error.response &&
+            error.response.status === 401 &&
+            error.config &&
+            accessToken &&
+            error.config.url !== "auth/refresh/" &&
+            !error.config._retry
+        ) {
+            error.config._retry = true;
+
+            return api.post("auth/refresh/")
+                .then((response) => {
+                    const newToken = response.data.access;
+
+                    setAuthToken(newToken);
+                    onTokenRefresh?.(newToken);
+
+                    return api.request(error.config);
+                });
+        }
+        return Promise.reject(error);
     }
 );
 export default api;

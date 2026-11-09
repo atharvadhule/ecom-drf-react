@@ -1,6 +1,7 @@
-import { createContext, useContext, useState , useEffect } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { setAuthToken } from "../api/axios";
 import api from "../api/axios";
+import { setOnTokenRefresh } from "../api/axios";
 // Holds authentication-related state that can be shared across the app.
 export const AuthContext = createContext(null);
 
@@ -9,11 +10,31 @@ export function AuthProvider({ children }) {
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [accessToken,   setAccessToken] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
 
-  // useEffect(() => {
-  //     setAuthToken(accessToken);  
-  // }, [accessToken]);
+
+  // Whenever the accessToken changes, update the auth token in the API module i.e axios.js
+  useEffect(() => {
+    setAuthToken(accessToken);
+  }, [accessToken]);
+
+
+  //get the new access token from the axios and update the accessToken state in AuthContext
+  useEffect(() => {
+    setOnTokenRefresh(setAccessToken);
+  }, []);
+
+
+  //
+  useEffect(() => {
+    setOnLogout(() => {
+      setUser(null);
+      setAccessToken(null);
+      setAuthToken(null);
+    });
+  }, []);
+
+
 
   useEffect(() => {
     async function checkAuth() {
@@ -23,8 +44,8 @@ export function AuthProvider({ children }) {
         const newToken = response.data.access;
         setAccessToken(newToken);
         setAuthToken(newToken);
-        const userResponse  = await api.get("auth/me/");
-        setUser(userResponse .data);
+        const userResponse = await api.get("auth/me/");
+        setUser(userResponse.data);
       } catch (error) {
         if (error.response?.status !== 401) {
           console.error(error);
@@ -32,22 +53,22 @@ export function AuthProvider({ children }) {
         setUser(null);
         setAccessToken(null);
       } finally {
-        setLoading(false);  
+        setLoading(false);
       }
     }
     checkAuth();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ 
+    <AuthContext.Provider value={{
       user,
       setUser,
       loading,
-      setLoading ,
+      setLoading,
       accessToken,
       setAccessToken
-      }}>
-        {children}
+    }}>
+      {children}
     </AuthContext.Provider>
   );
 }
