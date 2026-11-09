@@ -5,7 +5,7 @@ import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 
 function Login() {
-const { setUser, setAccessToken } = useAuth();
+  const { setUser, setAccessToken } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -19,7 +19,10 @@ const { setUser, setAccessToken } = useAuth();
         password: password,
       });
       const accessToken = response.data.access;
+      const username1 = response.data.username;
       setAccessToken(accessToken);
+      // setUser(username1);
+      // setMessage(username1 + " Successfully logged in!");
       try {
 
         const userResponse = await api.get("auth/me/", {
@@ -28,18 +31,14 @@ const { setUser, setAccessToken } = useAuth();
             Authorization: `Bearer ${accessToken}`,
           },
         });
+        setUser(userResponse.data);
+        setMessage(userResponse.data.username + " Successfully logged in!");
       } catch (error) {
         console.error(error);
         setUser(null);
         setAccessToken(null);
         setMessage("Login failed. Please check your credentials and try again.");
       }
-
-      console.log(userResponse.data);
-
-      setUser(userResponse.data);
-      setMessage(userResponse.data.username + " Successfully logged in!");
-      console.log(response.data);
     } catch (error) {
       console.error(error);
       setMessage("Login failed. Please check your credentials and try again.");

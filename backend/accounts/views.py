@@ -16,6 +16,7 @@ class CustomLoginView(TokenObtainPairView):
 
         if response.status_code == 200:
             refresh_token = response.data["refresh"]
+            response.data['username'] = request.data.get('username')  
 
             response.set_cookie(
                 key="refresh_token",
@@ -37,7 +38,7 @@ class CustomRefreshView(APIView):
 
     def post(self, request):
         refresh_token = request.COOKIES.get("refresh_token")
-
+        print("REFRESH COOKIE:", refresh_token)
         if not refresh_token:
             return Response(
                 {"error": "Refresh token not found."},
