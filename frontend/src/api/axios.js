@@ -62,7 +62,17 @@ api.interceptors.response.use(
                     setAuthToken(newToken);
                     onTokenRefresh?.(newToken);
 
+                    error.config.headers.Authorization =
+                        `Bearer ${newToken}`;
+
                     return api.request(error.config);
+                })
+                .catch((refreshError) => {
+                    setAuthToken(null);
+                    onTokenRefresh?.(null);
+                    onLogout?.();
+
+                    return Promise.reject(refreshError);
                 });
         }
         return Promise.reject(error);

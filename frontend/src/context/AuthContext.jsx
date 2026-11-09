@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { setAuthToken } from "../api/axios";
 import api from "../api/axios";
-import { setOnTokenRefresh } from "../api/axios";
+import { setOnTokenRefresh  , setOnLogout} from "../api/axios";
 // Holds authentication-related state that can be shared across the app.
 export const AuthContext = createContext(null);
 
@@ -59,6 +59,12 @@ export function AuthProvider({ children }) {
     checkAuth();
   }, []);
 
+
+  function logout() {
+    setUser(null);
+    setAccessToken(null);
+    setAuthToken(null);
+}
   return (
     <AuthContext.Provider value={{
       user,
@@ -66,7 +72,8 @@ export function AuthProvider({ children }) {
       loading,
       setLoading,
       accessToken,
-      setAccessToken
+      setAccessToken,
+      logout
     }}>
       {children}
     </AuthContext.Provider>

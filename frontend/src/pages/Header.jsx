@@ -1,15 +1,19 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
+import { setAuthToken } from "../api/axios";
 
 
 function Header() {
-  const { user } = useAuth();
+  const { user , setUser , logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
-  function handleLogout() {
+  function handleLogout(event) {
+    event.preventDefault();
     setUser(null);
+    setAuthToken(null);
+    logout();
+
     navigate("/login");
   }
 
@@ -42,9 +46,9 @@ function Header() {
           {user ? (
             <>
               <span>Welcome, {user.username}</span>
-              <Link onClick={handleLogout}>
+              <button onClick={handleLogout}>
                 Logout
-              </Link>
+              </button>
             </>
           ) : (
             <Link to="/login">Login</Link>
