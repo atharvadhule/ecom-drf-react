@@ -95,18 +95,15 @@ class CurrentUserView(APIView):
 
 
 class LogoutView(APIView):
-
     permission_classes = [AllowAny]
     def post(self, request):
         response = Response(
             {"message": "Logged out successfully."},
             status=status.HTTP_200_OK
         )
-
         response.delete_cookie(
             key="refresh_token",
             path="/api/auth/",
             samesite="Lax"
         )
-
         return response
