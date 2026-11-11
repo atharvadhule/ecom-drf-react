@@ -4,13 +4,14 @@ import { setAuthToken } from "../api/axios";
 
 
 function Header() {
-  const { user , setUser , logout } = useAuth();
+  const { user , setUser , logout , setAccessToken } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
   function handleLogout(event) {
     event.preventDefault();
     setUser(null);
+    setAccessToken(null);
     setAuthToken(null);
     logout();
 

@@ -1,5 +1,5 @@
 from django.urls import path
-from accounts.views import CustomRefreshView
+from accounts.views import CustomRefreshView, LogoutView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -12,4 +12,5 @@ urlpatterns = [
     path('login/', CustomLoginView.as_view(), name='login'),
     path("refresh/", CustomRefreshView.as_view(), name="token_refresh"),
     path('me/', CurrentUserView.as_view(), name='current_user'),
+    path("logout/", LogoutView.as_view(), name="logout"),
 ]

@@ -1,7 +1,9 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { setAuthToken } from "../api/axios";
-import api from "../api/axios";
-import { setOnTokenRefresh  , setOnLogout} from "../api/axios";
+import api, {
+    setAuthToken,
+    setOnTokenRefresh,
+    setOnLogout
+} from "../api/axios";
 // Holds authentication-related state that can be shared across the app.
 export const AuthContext = createContext(null);
 
@@ -27,13 +29,21 @@ export function AuthProvider({ children }) {
 
   //
   useEffect(() => {
-    setOnLogout(() => {
-      setUser(null);
-      setAccessToken(null);
-      setAuthToken(null);
-    });
+    setOnLogout(logout);
   }, []);
 
+
+async function logout() {
+    try {
+        await api.post("auth/logout/");
+    } catch (error) {
+        console.error("Logout API failed:", error);
+    } finally {
+        setUser(null);
+        setAccessToken(null);
+        setAuthToken(null);
+    }
+}
 
 
   useEffect(() => {
@@ -60,11 +70,7 @@ export function AuthProvider({ children }) {
   }, []);
 
 
-  function logout() {
-    setUser(null);
-    setAccessToken(null);
-    setAuthToken(null);
-}
+
   return (
     <AuthContext.Provider value={{
       user,

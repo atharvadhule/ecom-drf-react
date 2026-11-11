@@ -51,6 +51,7 @@ api.interceptors.response.use(
             error.config &&
             accessToken &&
             error.config.url !== "auth/refresh/" &&
+            error.config.url !== "auth/logout/" &&
             !error.config._retry
         ) {
             error.config._retry = true;
